@@ -1,4 +1,4 @@
-package com.github.hebertsouza87.pokeTreiner.domain.model;
+package com.github.hebertsouza87.pokeTreiner.application.entity;
 
 
 import jakarta.persistence.Column;
@@ -12,7 +12,7 @@ import jakarta.validation.constraints.Email;
 
 @Entity
 @Table(name = "treiner")
-public class Treiner {
+public class TreinerEntity {
 
     @Id
     @Column(updatable = false, nullable = false)
@@ -29,10 +29,10 @@ public class Treiner {
     @Column(nullable = false)
     private Integer age;
 
-    public Treiner() {
+    public TreinerEntity() {
     }
 
-    public Treiner(String name, String email, Integer age) {
+    public TreinerEntity(String name, String email, Integer age) {
         this.name = name;
         this.email = email;
         this.age = age;

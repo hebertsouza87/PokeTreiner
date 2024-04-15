@@ -1,6 +1,6 @@
 package com.github.hebertsouza87.pokeTreiner.application.model;
 
-import com.github.hebertsouza87.pokeTreiner.domain.model.Treiner;
+import com.github.hebertsouza87.pokeTreiner.application.entity.TreinerEntity;
 
 public class TreinerJson {
 
@@ -12,15 +12,15 @@ public class TreinerJson {
     public TreinerJson() {
     }
 
-    public TreinerJson(Treiner register) {
+    public TreinerJson(TreinerEntity register) {
         id = register.getId();
         name = register.getName();
         email = register.getEmail();
         age = register.getAge();
     }
 
-    public Treiner toModel() {
-        return new Treiner(name, email, age);
+    public TreinerEntity toModel() {
+        return new TreinerEntity(name, email, age);
     }
 
     public Long getId() {
