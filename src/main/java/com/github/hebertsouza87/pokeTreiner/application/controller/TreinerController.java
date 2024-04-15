@@ -1,4 +1,4 @@
-package com.github.hebertsouza87.pokeTreiner.application.Controller;
+package com.github.hebertsouza87.pokeTreiner.application.controller;
 
 import com.github.hebertsouza87.pokeTreiner.application.model.TreinerJson;
 import com.github.hebertsouza87.pokeTreiner.domain.service.TreinerService;
