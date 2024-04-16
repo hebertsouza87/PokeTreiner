@@ -23,13 +23,16 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.kafka:spring-kafka'
     implementation 'org.jbehave:jbehave-spring:5.2.0'
     implementation 'org.flywaydb:flyway-core'
     implementation 'org.postgresql:postgresql'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.jbehave:jbehave-core:5.2.0'
-    testImplementation 'org.testcontainers:postgresql:1.16.3'
+    testImplementation 'org.testcontainers:testcontainers:1.19.7'
+    testImplementation 'org.testcontainers:postgresql:1.19.7'
+    testImplementation 'org.testcontainers:kafka:1.19.7'
 }
 
 test {
@@ -38,7 +41,11 @@ test {
     systemProperty 'spring.jpa.hibernate.ddl-auto', 'none'
     systemProperty 'spring.datasource.driver-class-name', 'org.postgresql.Driver'
     systemProperty 'spring.flyway.enabled', 'false'
+
     systemProperty 'gateway.pokeapi.url', 'https://pokeapi.co/api/v2'
+
+    systemProperty 'kafka.bootstrap-servers', 'localhost:9092'
+    systemProperty 'kafka.consumer.group-id', 'group_id'
 }
 
 bootJar {

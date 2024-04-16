@@ -1,31 +1,29 @@
 package com.github.hebertsouza87.pokeTreiner.domain.service;
 
 import com.github.hebertsouza87.pokeTreiner.application.entity.TreinerEntity;
+import com.github.hebertsouza87.pokeTreiner.application.kafka.TreinerProducer;
 import com.github.hebertsouza87.pokeTreiner.application.repository.TreinerRepo;
 import com.github.hebertsouza87.pokeTreiner.domain.exception.InvalidObjectException;
 import com.github.hebertsouza87.pokeTreiner.domain.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-
 @Service
 public class TreinerService {
 
     private final TreinerRepo repo;
-    private final PokemonService pokemonService;
+    private final TreinerProducer treinerProducer;
 
     @Autowired
-    public TreinerService(TreinerRepo repo, PokemonService pokemonService) {
+    public TreinerService(TreinerRepo repo, TreinerProducer treinerProducer) {
         this.repo = repo;
-        this.pokemonService = pokemonService;
+        this.treinerProducer = treinerProducer;
     }
 
     public TreinerEntity register(TreinerEntity treiner) {
         validateTreiner(treiner);
         treiner = repo.save(treiner);
-        treiner.setPokemons(new ArrayList<>());
-        treiner.getPokemons().add(pokemonService.giveStarterPokemon(treiner));
+        treinerProducer.createdTreiner(treiner);
         return treiner;
     }
 

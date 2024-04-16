@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.test.context.ContextConfiguration;
+import org.testcontainers.containers.KafkaContainer;
 
 import java.util.List;
 
@@ -25,6 +26,9 @@ public class BehaviorTest extends JUnitStories {
 
     @Autowired
     private Flyway flyway;
+
+    @Autowired
+    private KafkaContainer kafkaContainer;
 
     @Override
     public Configuration configuration() {

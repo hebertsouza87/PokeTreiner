@@ -2,6 +2,7 @@ package com.github.hebertsouza87.pokeTreiner.domain.service;
 
 import com.github.hebertsouza87.pokeTreiner.application.entity.PokemonEntity;
 import com.github.hebertsouza87.pokeTreiner.application.entity.TreinerEntity;
+import com.github.hebertsouza87.pokeTreiner.application.kafka.TreinerProducer;
 import com.github.hebertsouza87.pokeTreiner.application.repository.TreinerRepo;
 import com.github.hebertsouza87.pokeTreiner.domain.exception.InvalidObjectException;
 import com.github.hebertsouza87.pokeTreiner.domain.exception.NotFoundException;
@@ -30,25 +31,28 @@ class TreinerServiceTest {
     @Mock
     private PokemonService pokemonService;
 
+    @Mock
+    private TreinerProducer treinerProducer;
+
     private TreinerService service;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        service = new TreinerService(repo, pokemonService);
+        service = new TreinerService(repo, treinerProducer);
     }
 
     @Test
     void register() {
         TreinerEntity treiner = new TreinerEntity("Ash", "ash@example.com", 20);
         treiner.setPokemons(new ArrayList<>());
-
         when(repo.findByEmail(treiner.getEmail())).thenReturn(null);
         when(repo.save(any(TreinerEntity.class))).thenReturn(treiner);
 
         TreinerEntity registeredTreiner = service.register(treiner);
 
         assertEquals(treiner, registeredTreiner);
+        verify(treinerProducer, times(1)).createdTreiner(treiner);
     }
 
     @Test
