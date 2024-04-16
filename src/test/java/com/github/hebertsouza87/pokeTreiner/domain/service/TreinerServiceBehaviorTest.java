@@ -3,7 +3,6 @@ package com.github.hebertsouza87.pokeTreiner.domain.service;
 import com.github.hebertsouza87.pokeTreiner.PokeTreinerApplication;
 import com.github.hebertsouza87.pokeTreiner.confg.TestConfig;
 import org.flywaydb.core.Flyway;
-import org.jbehave.core.annotations.BeforeStory;
 import org.jbehave.core.configuration.Configuration;
 import org.jbehave.core.configuration.MostUsefulConfiguration;
 import org.jbehave.core.io.LoadFromClasspath;
@@ -43,11 +42,5 @@ public class TreinerServiceBehaviorTest extends JUnitStories {
     @Override
     public List<String> storyPaths() {
         return List.of("com/github/hebertsouza87/pokeTreiner/domain/service/TreinerService.story");
-    }
-
-    @BeforeStory
-    public void beforeStory() {
-        flyway.clean();
-        flyway.migrate();
     }
 }

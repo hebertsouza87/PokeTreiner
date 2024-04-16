@@ -22,11 +22,17 @@ public class TestConfig {
         dataSource.setUsername(postgres.getUsername());
         dataSource.setPassword(postgres.getPassword());
 
+        getFlyway(dataSource).migrate();
+
         return dataSource;
     }
 
     @Bean
     public Flyway flyway(DataSource dataSource) {
+        return getFlyway(dataSource);
+    }
+
+    private Flyway getFlyway(DataSource dataSource) {
         return Flyway.configure()
                 .dataSource(dataSource)
                 .locations("classpath:db/migration")
