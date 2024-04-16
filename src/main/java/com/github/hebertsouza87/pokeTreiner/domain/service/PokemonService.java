@@ -7,6 +7,7 @@ import com.github.hebertsouza87.pokeTreiner.application.repository.PokemonRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -30,5 +31,9 @@ public class PokemonService {
         pokemon.setTreiner(treiner);
         repo.save(pokemon);
         return pokemon;
+    }
+
+    public List<PokemonEntity> getPokemonsByTrainerId(Long trainerId) {
+        return repo.findByTreinerId(trainerId);
     }
 }
