@@ -22,7 +22,7 @@ public class TreinerService {
         return repo.save(treiner);
     }
 
-    private void validateTreiner(TreinerEntity treiner) {
+    public void validateTreiner(TreinerEntity treiner) {
         if (repo.findByEmail(treiner.getEmail()) != null) {
             throw new NotFoundException("Treiner with email " + treiner.getEmail() + " already exists");
         }
@@ -45,6 +45,6 @@ public class TreinerService {
     }
 
     public TreinerEntity findById(Long id) {
-        return repo.findById(id).orElseThrow(() -> new IllegalArgumentException("Treiner with id " + id + " not found"));
+        return repo.findById(id).orElseThrow(() -> new NotFoundException("Treiner with id " + id + " not found"));
     }
 }
