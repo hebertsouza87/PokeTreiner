@@ -33,7 +33,7 @@ public class TreinerController {
 
     @GetMapping("/{id}")
     public TreinerJson getTreiner(@PathVariable Long id) {
-        return new TreinerJson(treinerService.findById(id));
+        return new TreinerJson(treinerService.findByIdWithPokemons(id));
     }
 
     @PutMapping("/{id}")

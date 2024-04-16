@@ -1,6 +1,6 @@
 package com.github.hebertsouza87.pokeTreiner.application.gateway;
 
-import com.github.hebertsouza87.pokeTreiner.application.model.PokemonResponse;
+import com.github.hebertsouza87.pokeTreiner.application.model.PokemonJson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,13 +15,13 @@ public class PokeApiGateway {
     @Value("${gateway.pokeapi.url}")
     private String apiUrl;
 
-    public String getPokemonName(int id) {
+    public PokemonJson getPokemon(int id) {
         try {
-            ResponseEntity<PokemonResponse> response = new RestTemplate()
-                    .getForEntity(apiUrl + "/pokemon/{id}", PokemonResponse.class, id);
+            ResponseEntity<PokemonJson> response = new RestTemplate()
+                    .getForEntity(apiUrl + "/pokemon/{id}", PokemonJson.class, id);
 
             if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
-                return response.getBody().name();
+                return response.getBody();
             }
 
         } catch (Exception e) {

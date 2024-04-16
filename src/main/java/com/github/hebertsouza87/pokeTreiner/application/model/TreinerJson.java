@@ -1,13 +1,18 @@
 package com.github.hebertsouza87.pokeTreiner.application.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.github.hebertsouza87.pokeTreiner.application.entity.TreinerEntity;
 
-public class TreinerJson {
+import java.util.List;
 
+public class TreinerJson {
+    
     private Long id;
     private String name;
     private String email;
     private Integer age;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private List<PokemonJson> pokemons;
 
     public TreinerJson() {
     }
@@ -17,6 +22,7 @@ public class TreinerJson {
         name = register.getName();
         email = register.getEmail();
         age = register.getAge();
+        pokemons = PokemonJson.fromModel(register.getPokemons());
     }
 
     public TreinerEntity toModel() {
@@ -53,5 +59,13 @@ public class TreinerJson {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public List<PokemonJson> getPokemons() {
+        return pokemons;
+    }
+
+    public void setPokemons(List<PokemonJson> pokemons) {
+        this.pokemons = pokemons;
     }
 }

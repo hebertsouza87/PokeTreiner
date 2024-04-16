@@ -1,6 +1,5 @@
-package com.github.hebertsouza87.pokeTreiner.domain.service;
+package com.github.hebertsouza87.pokeTreiner;
 
-import com.github.hebertsouza87.pokeTreiner.PokeTreinerApplication;
 import com.github.hebertsouza87.pokeTreiner.confg.TestConfig;
 import org.flywaydb.core.Flyway;
 import org.jbehave.core.configuration.Configuration;
@@ -11,6 +10,7 @@ import org.jbehave.core.reporters.Format;
 import org.jbehave.core.reporters.StoryReporterBuilder;
 import org.jbehave.core.steps.InjectableStepsFactory;
 import org.jbehave.core.steps.spring.SpringStepsFactory;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
@@ -21,7 +21,7 @@ import java.util.List;
 
 @SpringBootTest
 @ContextConfiguration(classes = TestConfig.class)
-public class TreinerServiceBehaviorTest extends JUnitStories {
+public class BehaviorTest extends JUnitStories {
 
     @Autowired
     private Flyway flyway;
@@ -42,5 +42,10 @@ public class TreinerServiceBehaviorTest extends JUnitStories {
     @Override
     public List<String> storyPaths() {
         return List.of("com/github/hebertsouza87/pokeTreiner/domain/service/TreinerService.story");
+    }
+
+    @Test
+    public void migrate() {
+        flyway.migrate();
     }
 }

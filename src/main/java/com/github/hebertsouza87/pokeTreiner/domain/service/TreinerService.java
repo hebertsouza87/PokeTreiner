@@ -7,19 +7,26 @@ import com.github.hebertsouza87.pokeTreiner.domain.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 public class TreinerService {
 
     private final TreinerRepo repo;
+    private final PokemonService pokemonService;
 
     @Autowired
-    public TreinerService(TreinerRepo repo) {
+    public TreinerService(TreinerRepo repo, PokemonService pokemonService) {
         this.repo = repo;
+        this.pokemonService = pokemonService;
     }
 
     public TreinerEntity register(TreinerEntity treiner) {
         validateTreiner(treiner);
-        return repo.save(treiner);
+        treiner = repo.save(treiner);
+        treiner.setPokemons(new ArrayList<>());
+        treiner.getPokemons().add(pokemonService.giveStarterPokemon(treiner));
+        return treiner;
     }
 
     public void validateTreiner(TreinerEntity treiner) {
@@ -46,5 +53,9 @@ public class TreinerService {
 
     public TreinerEntity findById(Long id) {
         return repo.findById(id).orElseThrow(() -> new NotFoundException("Treiner with id " + id + " not found"));
+    }
+
+    public TreinerEntity findByIdWithPokemons(Long id) {
+        return repo.findByIdWithPokemons(id).orElseThrow(() -> new NotFoundException("Treiner with id " + id + " not found"));
     }
 }

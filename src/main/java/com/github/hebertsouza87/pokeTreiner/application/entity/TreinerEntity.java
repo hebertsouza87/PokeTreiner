@@ -1,14 +1,16 @@
 package com.github.hebertsouza87.pokeTreiner.application.entity;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 
+import java.util.List;
 
 @Entity
 @Table(name = "treiner")
@@ -28,6 +30,9 @@ public class TreinerEntity {
 
     @Column(nullable = false)
     private Integer age;
+
+    @OneToMany(mappedBy = "treiner", fetch = FetchType.LAZY)
+    private List<PokemonEntity> pokemons;
 
     public TreinerEntity() {
     }
@@ -64,5 +69,13 @@ public class TreinerEntity {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public List<PokemonEntity> getPokemons() {
+        return pokemons;
+    }
+
+    public void setPokemons(List<PokemonEntity> pokemons) {
+        this.pokemons = pokemons;
     }
 }

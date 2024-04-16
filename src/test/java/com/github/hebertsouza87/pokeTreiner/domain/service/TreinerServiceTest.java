@@ -1,5 +1,6 @@
 package com.github.hebertsouza87.pokeTreiner.domain.service;
 
+import com.github.hebertsouza87.pokeTreiner.application.entity.PokemonEntity;
 import com.github.hebertsouza87.pokeTreiner.application.entity.TreinerEntity;
 import com.github.hebertsouza87.pokeTreiner.application.repository.TreinerRepo;
 import com.github.hebertsouza87.pokeTreiner.domain.exception.InvalidObjectException;
@@ -9,10 +10,13 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -23,17 +27,21 @@ class TreinerServiceTest {
     @Mock
     private TreinerRepo repo;
 
+    @Mock
+    private PokemonService pokemonService;
+
     private TreinerService service;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        service = new TreinerService(repo);
+        service = new TreinerService(repo, pokemonService);
     }
 
     @Test
     void register() {
         TreinerEntity treiner = new TreinerEntity("Ash", "ash@example.com", 20);
+        treiner.setPokemons(new ArrayList<>());
 
         when(repo.findByEmail(treiner.getEmail())).thenReturn(null);
         when(repo.save(any(TreinerEntity.class))).thenReturn(treiner);
@@ -103,17 +111,53 @@ class TreinerServiceTest {
     void findById() {
         TreinerEntity existingTreiner = new TreinerEntity("Ash", "ash@example.com", 20);
 
-        when(repo.findById(1L)).thenReturn(Optional.of(existingTreiner));
+        when(repo.findByIdWithPokemons(1L)).thenReturn(Optional.of(existingTreiner));
 
-        TreinerEntity result = service.findById(1L);
+        TreinerEntity result = service.findByIdWithPokemons(1L);
 
         assertEquals(existingTreiner, result);
     }
 
     @Test
     void findNonExistingTreinerById() {
-        when(repo.findById(1L)).thenReturn(Optional.empty());
+        when(repo.findByIdWithPokemons(1L)).thenReturn(Optional.empty());
 
-        assertThrows(NotFoundException.class, () -> service.findById(1L));
+        assertThrows(NotFoundException.class, () -> service.findByIdWithPokemons(1L));
+    }
+
+    @Test
+    void findByIdWithPokemons() {
+        TreinerEntity existingTreiner = new TreinerEntity("Ash", "ash@example.com", 20);
+        PokemonEntity pikachu = new PokemonEntity("Pikachu", 25);
+        pikachu.setTreiner(existingTreiner);
+        existingTreiner.setPokemons(List.of(pikachu));
+
+        when(repo.findByIdWithPokemons(1L)).thenReturn(Optional.of(existingTreiner));
+
+        TreinerEntity result = service.findByIdWithPokemons(1L);
+
+        assertEquals(existingTreiner, result);
+        assertEquals(1, result.getPokemons().size());
+        assertEquals(pikachu, result.getPokemons().get(0));
+    }
+
+    @Test
+    void findByIdWithNoPokemons() {
+        TreinerEntity existingTreiner = new TreinerEntity("Ash", "ash@example.com", 20);
+        existingTreiner.setPokemons(new ArrayList<>());
+
+        when(repo.findByIdWithPokemons(1L)).thenReturn(Optional.of(existingTreiner));
+
+        TreinerEntity result = service.findByIdWithPokemons(1L);
+
+        assertEquals(existingTreiner, result);
+        assertTrue(result.getPokemons().isEmpty());
+    }
+
+    @Test
+    void findByIdWithPokemonsButTreinerDoesNotExist() {
+        when(repo.findByIdWithPokemons(1L)).thenReturn(Optional.empty());
+
+        assertThrows(NotFoundException.class, () -> service.findByIdWithPokemons(1L));
     }
 }
