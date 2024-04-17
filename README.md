@@ -29,8 +29,16 @@ Um consumidor irá ouvir este tópico e irá atribuir um pokémon aleatório ao 
 ### Com Docker
 
 1. Certifique-se de ter o Docker e o Docker Compose instalados na sua máquina.
-2. Atualize o arquivo `docker-compose.yml` com as credenciais corretas do seu banco de dados PostgreSQL.
+2. Execute o comando `./gradlew build` para gerar o arquivo.
 3. Execute o comando `docker-compose up` no terminal para iniciar a aplicação.
+
+### Recomendação
+
+Utilize o docker-compose para subir as dependencias do projeto, mas para rodar a aplicação utilize o
+comando `./gradlew bootRun`.
+Ou remova o comentário da biblioteca spring-boot-docker-compose no arquivo build.gradle.
+A biblioteca nem sempre funciona corretamente, mas ela serve para subir as dependencias do projeto automaticamente,
+quando você executar a aplicação.
 
 ## Documentação da API
 
