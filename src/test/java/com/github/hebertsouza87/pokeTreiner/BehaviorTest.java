@@ -15,12 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.ContextConfiguration;
 import org.testcontainers.containers.KafkaContainer;
 
 import java.util.List;
 
 @SpringBootTest
+@Profile("test")
 @ContextConfiguration(classes = TestConfig.class)
 public class BehaviorTest extends JUnitStories {
 

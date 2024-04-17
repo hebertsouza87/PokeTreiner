@@ -38,6 +38,8 @@ dependencies {
 test {
     useJUnitPlatform()
     systemProperty 'spring.application.name', 'pokeTreiner-test'
+    systemProperty 'spring.profiles.active', 'test'
+    
     systemProperty 'spring.jpa.hibernate.ddl-auto', 'none'
     systemProperty 'spring.datasource.driver-class-name', 'org.postgresql.Driver'
     systemProperty 'spring.flyway.enabled', 'false'
