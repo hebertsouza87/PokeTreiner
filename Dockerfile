@@ -1,14 +1,22 @@
-# Use a base image with Java 17
-FROM openjdk:17-jdk-alpine
+FROM openjdk:17-jdk-alpine as build
 
-# Set a working directory
 WORKDIR /app
 
-# Copy the Spring Boot JAR file into the container
-COPY build/libs/*.jar app.jar
+COPY gradlew .
+COPY gradle gradle
 
-# Expose the application port
-EXPOSE 8080
+RUN chmod +x ./gradlew
 
-# Define the command to start the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+COPY build.gradle settings.gradle ./
+
+COPY src src
+
+RUN ./gradlew build
+
+FROM openjdk:17-jdk-alpine
+
+WORKDIR /app
+
+COPY --from=build /app/build/libs/*.jar app.jar
+
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app/app.jar"]
