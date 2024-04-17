@@ -20,6 +20,13 @@ Um consumidor irá ouvir este tópico e irá atribuir um pokémon aleatório ao 
 
 ## Como Rodar o Projeto
 
+Atenção: Os testes não são executados com o comando `./gradlew build`.
+
+Os mesmos devem ser executados com o comando `./gradlew test` ou `./gradlew check`.
+
+Eles foram removidos para otimizeção do tempo de build, visto que os testes devam ser executados em um ambiente de
+CI/CD.
+
 ### Sem Docker
 
 1. Certifique-se de ter o PostgreSQL e o Apache Kafka instalados e rodando na sua máquina.
