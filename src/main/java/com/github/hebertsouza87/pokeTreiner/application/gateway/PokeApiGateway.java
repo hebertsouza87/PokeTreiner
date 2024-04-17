@@ -13,13 +13,22 @@ import org.springframework.web.client.RestTemplate;
 public class PokeApiGateway {
     private static final Logger log = LoggerFactory.getLogger(PokeApiGateway.class);
 
-    @Value("${gateway.pokeapi.url}")
+    private RestTemplate restTemplate;
     private String apiUrl;
+
+    @Value("${gateway.pokeapi.url}")
+    public void setApiUrl(String apiUrl) {
+        this.apiUrl = apiUrl;
+    }
+
+    public void setRestTemplate(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     @CircuitBreaker(name = "pokeApi", fallbackMethod = "getPokemonFallback")
     public PokemonJson getPokemon(int id) {
         try {
-            ResponseEntity<PokemonJson> response = new RestTemplate()
+            ResponseEntity<PokemonJson> response = restTemplate
                     .getForEntity(apiUrl + "/pokemon/{id}", PokemonJson.class, id);
 
             if (response.getStatusCode().is2xxSuccessful() && response.getBody() != null) {
@@ -37,5 +46,4 @@ public class PokeApiGateway {
         log.error("Fallback method called due to: ", throwable);
         return new PokemonJson("pickachu", 25);
     }
-
 }
