@@ -82,4 +82,10 @@ Para gerar um relatório de cobertura de código com Jacoco, você pode usar o c
 
 Após a execução dos testes, você pode visualizar o relatório de cobertura de código em `build/jacocoHtml/index.html`.
 
-O comando `./gradlew jacocoTestCoverageVerification` verifica se a cobertura de código é maior que 60%.
+O comando `./gradlew jacocoTestCoverageVerification` verifica se a cobertura de código é maior que 75%.
+
+## Relatório de Qualidade de Código
+
+O relatório de qualidade de código é gerado pelo Qodana.
+
+Você pode visualizar o relatório atual [aqui](https://qodana.cloud/projects/pQdyl/reports/10N2g).
