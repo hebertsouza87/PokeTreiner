@@ -44,6 +44,9 @@ Este projeto utiliza JUnit5, JBehave, TestContainer e Jacoco para testes e cober
 ### Como Rodar os Testes
 
 Para rodar os testes, você pode usar o comando `./gradlew test`.
+
+A comando `./gradlew check` executa todos os testes e verificações.
+
 Você precisará ter o Docker e o Docker Compose instalados na sua máquina para rodar os testes.
 
 ### JBehave
@@ -55,7 +58,7 @@ compreensíveis.
 
 Os testes são executados automaticamente quando você executa o comando `./gradlew test`
 
-Após a execução dos testes, você pode visualizar o relatório de testes em `build/reports/jbehave/view/index.html`.
+Após a execução dos testes, você pode visualizar o relatório de testes em `target/jbehave/view/index.html`.
 
 ### Jacoco
 
@@ -63,8 +66,9 @@ Jacoco é uma biblioteca usada para medir a cobertura de código de testes de ap
 
 Ele fornece informações sobre quais partes do código foram executadas durante o processo de teste.
 
-Para gerar um relatório de cobertura de código com Jacoco, você pode usar o comando `./gradlew test jacocoTestReport`.
+Para gerar um relatório de cobertura de código com Jacoco, você pode usar o comando `./gradlew jacocoTestReport`.
 
 Após a execução dos testes, você pode visualizar o relatório de cobertura de código
-em `build/reports/jacoco/test/html/index.html`.
-    
+em `build/jacocoHtml/index.html`.
+
+O comando `./gradlew jacocoTestCoverageVerification` verifica se a cobertura de código é maior que 60%.
