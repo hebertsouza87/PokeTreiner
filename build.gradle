@@ -27,6 +27,7 @@ dependencies {
     implementation 'org.jbehave:jbehave-spring:5.2.0'
     implementation 'org.flywaydb:flyway-core'
     implementation 'org.postgresql:postgresql'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.4.0'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.jbehave:jbehave-core:5.2.0'
@@ -39,7 +40,7 @@ test {
     useJUnitPlatform()
     systemProperty 'spring.application.name', 'pokeTreiner-test'
     systemProperty 'spring.profiles.active', 'test'
-    
+
     systemProperty 'spring.jpa.hibernate.ddl-auto', 'none'
     systemProperty 'spring.datasource.driver-class-name', 'org.postgresql.Driver'
     systemProperty 'spring.flyway.enabled', 'false'
