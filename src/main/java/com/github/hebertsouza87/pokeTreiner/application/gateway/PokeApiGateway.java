@@ -1,6 +1,7 @@
 package com.github.hebertsouza87.pokeTreiner.application.gateway;
 
 import com.github.hebertsouza87.pokeTreiner.application.model.PokemonJson;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +16,7 @@ public class PokeApiGateway {
     @Value("${gateway.pokeapi.url}")
     private String apiUrl;
 
+    @CircuitBreaker(name = "pokeApi", fallbackMethod = "getPokemonFallback")
     public PokemonJson getPokemon(int id) {
         try {
             ResponseEntity<PokemonJson> response = new RestTemplate()
@@ -30,4 +32,10 @@ public class PokeApiGateway {
 
         return null;
     }
+
+    public PokemonJson getPokemonFallback(int id, Throwable throwable) {
+        log.error("Fallback method called due to: ", throwable);
+        return new PokemonJson("pickachu", 25);
+    }
+
 }

@@ -12,6 +12,7 @@ Um consumidor irá ouvir este tópico e irá atribuir um pokémon aleatório ao 
 - **Spring Kafka**: Usado para integração com o Apache Kafka.
 - **Flyway**: Usado para migração de banco de dados.
 - **PostgreSQL**: Driver JDBC para o banco de dados PostgreSQL.
+- **Resilience4j**: Usado para tolerância a falhas.
 - **SpringDoc OpenAPI**: Usado para gerar documentação da API.
 - **JBehave**: Usado para testes de comportamento.
 - **Jacoco**: Usado para cobertura de código.
@@ -21,24 +22,20 @@ Um consumidor irá ouvir este tópico e irá atribuir um pokémon aleatório ao 
 
 ### Sem Docker
 
-1. Certifique-se de ter o PostgreSQL instalado e rodando na sua máquina.
+1. Certifique-se de ter o PostgreSQL e o Apache Kafka instalados e rodando na sua máquina.
 2. Atualize o arquivo `src/main/resources/application.properties` com as credenciais corretas do seu banco de dados
-   PostgreSQL.
+   PostgreSQL e as configurações do Kafka.
 3. Execute o comando `./gradlew bootRun` no terminal para iniciar a aplicação.
 
 ### Com Docker
 
 1. Certifique-se de ter o Docker e o Docker Compose instalados na sua máquina.
-2. Execute o comando `./gradlew build` para gerar o arquivo.
-3. Execute o comando `docker-compose up` no terminal para iniciar a aplicação.
+2. Execute o comando `docker-compose up` no terminal para iniciar a aplicação.
 
-### Recomendação
+### Recomendação para o desenvolvimento
 
 Utilize o docker-compose para subir as dependencias do projeto, mas para rodar a aplicação utilize o
 comando `./gradlew bootRun`.
-Ou remova o comentário da biblioteca spring-boot-docker-compose no arquivo build.gradle.
-A biblioteca nem sempre funciona corretamente, mas ela serve para subir as dependencias do projeto automaticamente,
-quando você executar a aplicação.
 
 ## Documentação da API
 
@@ -76,7 +73,6 @@ Ele fornece informações sobre quais partes do código foram executadas durante
 
 Para gerar um relatório de cobertura de código com Jacoco, você pode usar o comando `./gradlew jacocoTestReport`.
 
-Após a execução dos testes, você pode visualizar o relatório de cobertura de código
-em `build/jacocoHtml/index.html`.
+Após a execução dos testes, você pode visualizar o relatório de cobertura de código em `build/jacocoHtml/index.html`.
 
 O comando `./gradlew jacocoTestCoverageVerification` verifica se a cobertura de código é maior que 60%.
