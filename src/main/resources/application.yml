@@ -1,0 +1,102 @@
+# Configurações do Spring
+spring:
+  application:
+    name: pokeTreiner
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5433/poke_treiner
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        generate_statistics: true
+        enable_lazy: true
+  flyway:
+    baseline-on-migrate: true
+    user: postgres
+    password: postgres
+    url: jdbc:postgresql://localhost:5433/poke_treiner
+
+# Configurações do Gateway
+gateway:
+  pokeapi:
+    url: https://pokeapi.co/api/v2
+
+# Configurações do Kafka
+kafka:
+  bootstrap-servers: localhost:9092
+  consumer:
+    group-id: group_id
+
+# Configurações do Springdoc
+springdoc:
+  swagger-ui:
+    enabled: true
+
+# Configurações do Management
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    metrics:
+      enabled: true
+    prometheus:
+      enabled: true
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+
+# Configurações do Resilience4j
+resilience4j:
+  circuitbreaker:
+    instances:
+      pokeApi:
+        registerHealthIndicator: true
+        slidingWindowSize: 100
+        minimumNumberOfCalls: 10
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 3s
+        failureRateThreshold: 5
+        eventConsumerBufferSize: 10
+  ratelimiter:
+    instances:
+      pokeApi:
+        registerHealthIndicator: true
+        limitForPeriod: 10
+        limitRefreshPeriod: 1s
+        timeoutDuration: 0
+        eventConsumerBufferSize: 10
+  retry:
+    instances:
+      pokeApi:
+        maxRetryAttempts: 2
+        waitDuration: 1s
+        enableExponentialBackoff: true
+        exponentialBackoffMultiplier: 2
+        maxWaitDuration: 2s
+        retryExceptions:
+          - java.net.SocketTimeoutException
+        ignoreExceptions:
+          - io.github.resilience4j.circuitbreaker.CallNotPermittedException
+  bulkhead:
+    instances:
+      pokeApi:
+        registerHealthIndicator: true
+        maxConcurrentCalls: 10
+        maxWaitDuration: 0
+        eventConsumerBufferSize: 10
