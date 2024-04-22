@@ -23,8 +23,8 @@ public class KafkaConfigTest {
     private ConsumerFactory<String, String> consumerFactory;
 
     @Autowired
-    private ConcurrentKafkaListenerContainerFactory kafkaListenerContainerFactory;
-
+    private ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory;
+    
     @Test
     public void producerFactory_ShouldBeConfigured() {
         assertNotNull(producerFactory);
