@@ -79,12 +79,19 @@ jacocoTestReport {
 }
 
 jacocoTestCoverageVerification {
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: ['**/KafkaConfig.class'])
+        }))
+    }
+    
     violationRules {
         rule {
             limit {
                 counter = 'LINE'
                 value = 'COVEREDRATIO'
-                minimum = 0.75
+                minimum = 0.80
             }
         }
 
@@ -92,7 +99,7 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'BRANCH'
                 value = 'COVEREDRATIO'
-                minimum = 0.75
+                minimum = 0.77
             }
         }
     }

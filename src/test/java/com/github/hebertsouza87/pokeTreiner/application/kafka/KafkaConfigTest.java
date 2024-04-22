@@ -3,6 +3,7 @@ package com.github.hebertsouza87.pokeTreiner.application.kafka;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
@@ -21,6 +22,9 @@ public class KafkaConfigTest {
     @Autowired
     private ConsumerFactory<String, String> consumerFactory;
 
+    @Autowired
+    private ConcurrentKafkaListenerContainerFactory kafkaListenerContainerFactory;
+
     @Test
     public void producerFactory_ShouldBeConfigured() {
         assertNotNull(producerFactory);
@@ -34,5 +38,10 @@ public class KafkaConfigTest {
     @Test
     public void consumerFactory_ShouldBeConfigured() {
         assertNotNull(consumerFactory);
+    }
+
+    @Test
+    public void consumerFactory_kafkaListenerContainerFactory() {
+        assertNotNull(kafkaListenerContainerFactory);
     }
 }
