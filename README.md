@@ -1,8 +1,14 @@
 # PokeTreiner
 
 PokeTreiner é um projeto de estudo onde é possível cadastrar um treinador de pokémon.
+
 Ao realizar esta ação, será enviado uma mensagem para um tópico do Apache Kafka.
-Um consumidor irá ouvir este tópico e irá atribuir um pokémon aleatório ao treinador cadastrado.
+
+Um consumidor irá ouvir este tópico e irá atribuir um pokémon aleatório da primeira geração ao treinador cadastrado.
+
+Foi utilizado o [PokeAPI](https://pokeapi.co/) para obter os dados dos pokémons.
+
+Se a API do PokeAPI estiver fora do ar, o treinador receberá um pikachu.
 
 ## Bibliotecas Utilizadas
 
@@ -89,3 +95,13 @@ O comando `./gradlew jacocoTestCoverageVerification` verifica se a cobertura de 
 O relatório de qualidade de código é gerado pelo Qodana.
 
 Você pode visualizar o relatório atual [aqui](https://qodana.cloud/projects/pQdyl/reports/10N2g).
+
+## Observability with Prometheus
+
+Essa aplicação expõe métricas via o endpoint `/actuator/prometheus`, que pode ser raspado por um servidor Prometheus.
+
+Para acessar as métricas, você pode usar um cliente HTTP.
+
+```bash
+curl http://localhost:8080/actuator/prometheus
+```

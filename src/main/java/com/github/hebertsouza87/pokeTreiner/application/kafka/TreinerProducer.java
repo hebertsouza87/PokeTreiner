@@ -1,6 +1,5 @@
 package com.github.hebertsouza87.pokeTreiner.application.kafka;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.hebertsouza87.pokeTreiner.application.entity.TreinerEntity;
 import com.github.hebertsouza87.pokeTreiner.application.model.TreinerJson;
@@ -22,13 +21,15 @@ public class TreinerProducer {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public void createdTreiner(TreinerEntity treiner) {
+    public boolean createdTreiner(TreinerEntity treiner) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             String json = objectMapper.writeValueAsString(new TreinerJson(treiner));
             kafkaTemplate.send("createdTreiner", json);
-        } catch (JsonProcessingException e) {
+            return true;
+        } catch (Exception e) {
             logger.error("Error on send createdTreiner message", e);
+            return false;
         }
     }
 }

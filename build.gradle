@@ -8,10 +8,7 @@ plugins {
 
 group = 'com.github.hebertsouza87'
 version = '0.0.1-SNAPSHOT'
-
-java {
-    sourceCompatibility = '17'
-}
+sourceCompatibility = '17'
 
 repositories {
     mavenCentral()
@@ -27,6 +24,8 @@ dependencies {
     implementation 'org.flywaydb:flyway-core'
     implementation 'org.postgresql:postgresql'
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.4.0'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'io.micrometer:micrometer-registry-prometheus'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.jbehave:jbehave-core:5.2.0'
@@ -35,25 +34,8 @@ dependencies {
     testImplementation 'org.testcontainers:kafka:1.19.7'
 }
 
-gradle.taskGraph.whenReady { graph ->
-    if (graph.hasTask(':build')) {
-        test.enabled = false
-    }
-}
-
-test {
-    useJUnitPlatform()
-    systemProperty 'spring.application.name', 'pokeTreiner-test'
-    systemProperty 'spring.profiles.active', 'test'
-
-    systemProperty 'spring.jpa.hibernate.ddl-auto', 'none'
-    systemProperty 'spring.datasource.driver-class-name', 'org.postgresql.Driver'
-    systemProperty 'spring.flyway.enabled', 'false'
-
-    systemProperty 'gateway.pokeapi.url', 'https://pokeapi.co/api/v2'
-
-    systemProperty 'kafka.bootstrap-servers', 'localhost:9092'
-    systemProperty 'kafka.consumer.group-id', 'group_id'
+application {
+    mainClassName = 'com.github.hebertsouza87.pokeTreiner.PokeTreinerApplication'
 }
 
 bootJar {
@@ -65,8 +47,22 @@ jar {
     enabled = false
 }
 
-application {
-    mainClassName = 'com.github.hebertsouza87.pokeTreiner.PokeTreinerApplication'
+test {
+    useJUnitPlatform()
+    systemProperty 'spring.application.name', 'pokeTreiner-test'
+    systemProperty 'spring.profiles.active', 'test'
+    systemProperty 'spring.jpa.hibernate.ddl-auto', 'none'
+    systemProperty 'spring.datasource.driver-class-name', 'org.postgresql.Driver'
+    systemProperty 'spring.flyway.enabled', 'false'
+    systemProperty 'gateway.pokeapi.url', 'https://pokeapi.co/api/v2'
+    systemProperty 'kafka.bootstrap-servers', 'localhost:9092'
+    systemProperty 'kafka.consumer.group-id', 'group_id'
+}
+
+gradle.taskGraph.whenReady { graph ->
+    if (graph.hasTask(':build')) {
+        test.enabled = false
+    }
 }
 
 jacocoTestReport {
@@ -77,20 +73,33 @@ jacocoTestReport {
 }
 
 jacocoTestCoverageVerification {
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: ['**/KafkaConfig.class',
+                              '**/PokeTreinerApplication.class',
+                              '**/*get*',
+                              '**/*set*']
+            )
+        }))
+    }
+
     violationRules {
         rule {
+            excludes = ['**/*get*', '**/*set*']
             limit {
                 counter = 'LINE'
                 value = 'COVEREDRATIO'
-                minimum = 0.75
+                minimum = 0.85
             }
         }
 
         rule {
+            excludes = ['**/*get*', '**/*set*']
             limit {
                 counter = 'BRANCH'
                 value = 'COVEREDRATIO'
-                minimum = 0.75
+                minimum = 0.77
             }
         }
     }
