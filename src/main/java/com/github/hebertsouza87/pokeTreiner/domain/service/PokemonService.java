@@ -14,24 +14,39 @@ import java.util.Random;
 @Service
 public class PokemonService {
 
+    public static final int MAX_POKEMONS_PER_TRAINER = 6;
     private final PokeApiGateway pokeApiGateway;
     private final PokemonRepo repo;
+    private final TreinerService treinerService;
     private final Random random;
 
     @Autowired
-    public PokemonService(PokeApiGateway pokeApiGateway, PokemonRepo repo) {
+    public PokemonService(PokeApiGateway pokeApiGateway, PokemonRepo repo, TreinerService treinerService) {
         this.pokeApiGateway = pokeApiGateway;
+        this.treinerService = treinerService;
         this.repo = repo;
         this.random = new Random();
     }
 
     public PokemonEntity giveStarterPokemon(TreinerEntity treiner) {
         int pokemonNumber = random.nextInt(151) + 1;
+        return addPokemonToTreiner(treiner, pokemonNumber);
+    }
+
+    private PokemonEntity addPokemonToTreiner(TreinerEntity treiner, Integer pokemonNumber) {
+        if (treiner.getPokemons().size() >= MAX_POKEMONS_PER_TRAINER) {
+            throw new IllegalArgumentException("Treiner already has 6 pokemons");
+        }
+
         PokemonEntity pokemon = pokeApiGateway.getPokemon(pokemonNumber).toModel();
         pokemon.setNumber(pokemonNumber);
         pokemon.setTreiner(treiner);
         repo.save(pokemon);
         return pokemon;
+    }
+
+    public PokemonEntity addPokemonToTreiner(Long treinerId, Integer pokemonNumber) {
+        return addPokemonToTreiner(treinerService.findByIdWithPokemons(treinerId), pokemonNumber);
     }
 
     public List<PokemonEntity> getPokemonsByTrainerId(Long trainerId) {
@@ -43,6 +58,11 @@ public class PokemonService {
         pokemon.setLevel(pokemon.getLevel() + 1);
         repo.save(pokemon);
         return pokemon;
+    }
+
+    public void releasePokemon(Long pokemonId) {
+        PokemonEntity pokemon = getPokemonById(pokemonId);
+        repo.delete(pokemon);
     }
 
     private PokemonEntity getPokemonById(Long pokemonId) {
