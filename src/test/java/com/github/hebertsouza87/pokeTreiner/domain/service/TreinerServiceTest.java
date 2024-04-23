@@ -29,9 +29,6 @@ class TreinerServiceTest {
     private TreinerRepo repo;
 
     @Mock
-    private PokemonService pokemonService;
-
-    @Mock
     private TreinerProducer treinerProducer;
 
     private TreinerService service;
@@ -48,11 +45,24 @@ class TreinerServiceTest {
         treiner.setPokemons(new ArrayList<>());
         when(repo.findByEmail(treiner.getEmail())).thenReturn(null);
         when(repo.save(any(TreinerEntity.class))).thenReturn(treiner);
+        when(treinerProducer.createdTreiner(treiner)).thenReturn(true); // Mock to return true
 
         TreinerEntity registeredTreiner = service.register(treiner);
 
         assertEquals(treiner, registeredTreiner);
         verify(treinerProducer, times(1)).createdTreiner(treiner);
+    }
+
+    @Test
+    void registerWithFailedProducer() {
+        TreinerEntity treiner = new TreinerEntity("Ash", "ash@example.com", 20);
+        treiner.setPokemons(new ArrayList<>());
+        when(repo.findByEmail(treiner.getEmail())).thenReturn(null);
+        when(repo.save(any(TreinerEntity.class))).thenReturn(treiner);
+        when(treinerProducer.createdTreiner(treiner)).thenReturn(false);
+
+        assertThrows(InvalidObjectException.class, () -> service.register(treiner));
+        verify(repo, times(1)).delete(treiner);
     }
 
     @Test

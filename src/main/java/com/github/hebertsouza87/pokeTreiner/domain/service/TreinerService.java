@@ -23,8 +23,12 @@ public class TreinerService {
     public TreinerEntity register(TreinerEntity treiner) {
         validateTreiner(treiner);
         treiner = repo.save(treiner);
-        treinerProducer.createdTreiner(treiner);
-        return treiner;
+        if (treinerProducer.createdTreiner(treiner)) {
+            return treiner;
+        } else {
+            repo.delete(treiner);
+            throw new InvalidObjectException("Error while creating treiner");
+        }
     }
 
     public void validateTreiner(TreinerEntity treiner) {
