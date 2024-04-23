@@ -40,7 +40,7 @@ application {
 
 bootJar {
     enabled = true
-    mainClassName = 'com.github.hebertsouza87.poketr.PokemonTreinerRegisterApplication'
+    mainClassName = 'com.github.hebertsouza87.poketr.PokeTreinerRegisterApplication'
 }
 
 jar {
