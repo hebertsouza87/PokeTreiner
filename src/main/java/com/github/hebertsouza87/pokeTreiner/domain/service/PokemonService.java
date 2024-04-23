@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -35,5 +36,20 @@ public class PokemonService {
 
     public List<PokemonEntity> getPokemonsByTrainerId(Long trainerId) {
         return repo.findByTreinerId(trainerId);
+    }
+
+    public PokemonEntity levelUp(Long pokemonId) {
+        PokemonEntity pokemon = getPokemonById(pokemonId);
+        pokemon.setLevel(pokemon.getLevel() + 1);
+        repo.save(pokemon);
+        return pokemon;
+    }
+
+    private PokemonEntity getPokemonById(Long pokemonId) {
+        Optional<PokemonEntity> pokemon = repo.findById(pokemonId);
+        if (pokemon.isEmpty()) {
+            throw new IllegalArgumentException("Pokemon not found");
+        }
+        return pokemon.orElse(null);
     }
 }

@@ -23,6 +23,9 @@ public class PokemonEntity {
     @Column(nullable = false)
     private Integer number;
 
+    @Column(nullable = false)
+    private Integer level = 1;
+
     @ManyToOne
     @JoinColumn(name = "treiner_id", nullable = false)
     private TreinerEntity treiner;
@@ -33,6 +36,14 @@ public class PokemonEntity {
     public PokemonEntity(String name, Integer number) {
         this.name = name;
         this.number = number;
+
+    }
+
+    public PokemonEntity(Long id, String name, Integer number, Integer level) {
+        this.id = id;
+        this.name = name;
+        this.number = number;
+        this.level = level;
     }
 
     public Long getId() {
@@ -53,6 +64,14 @@ public class PokemonEntity {
 
     public void setNumber(Integer number) {
         this.number = number;
+    }
+
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
     }
 
     public TreinerEntity getTreiner() {
