@@ -24,7 +24,7 @@ public class TreinerEntity {
     @Column(nullable = false, length = 50)
     private String name;
 
-    @Email
+    @Email(message = "Invalid email")
     @Column(nullable = false, length = 50, unique = true)
     private String email;
 
