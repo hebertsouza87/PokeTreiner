@@ -65,7 +65,7 @@ public class PokemonService {
         repo.delete(pokemon);
     }
 
-    private PokemonEntity getPokemonById(Long pokemonId) {
+    public PokemonEntity getPokemonById(Long pokemonId) {
         Optional<PokemonEntity> pokemon = repo.findById(pokemonId);
         if (pokemon.isEmpty()) {
             throw new IllegalArgumentException("Pokemon not found");
