@@ -118,7 +118,6 @@ public class PokemonServiceTest {
     @Test
     public void addPokemonToTreiner_MaxLimitExceeded() {
         when(treinerService.findByIdWithPokemons(anyLong())).thenReturn(treiner);
-        when(pokeApiGateway.getPokemon(anyInt())).thenReturn(PokemonJson.fromModel(pokemon));
         List<PokemonEntity> pokemons = new ArrayList<>();
         for (int i = 0; i < PokemonService.MAX_POKEMONS_PER_TRAINER; i++) {
             pokemons.add(new PokemonEntity());
