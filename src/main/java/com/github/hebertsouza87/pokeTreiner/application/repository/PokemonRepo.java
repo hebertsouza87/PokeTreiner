@@ -1,6 +1,6 @@
 package com.github.hebertsouza87.pokeTreiner.application.repository;
 
-import com.github.hebertsouza87.pokeTreiner.application.entity.PokemonEntity;
+import com.github.hebertsouza87.pokeTreiner.domain.entity.PokemonEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

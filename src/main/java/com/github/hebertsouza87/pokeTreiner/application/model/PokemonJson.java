@@ -1,7 +1,7 @@
 package com.github.hebertsouza87.pokeTreiner.application.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.github.hebertsouza87.pokeTreiner.application.entity.PokemonEntity;
+import com.github.hebertsouza87.pokeTreiner.domain.entity.PokemonEntity;
 
 import java.util.List;
 

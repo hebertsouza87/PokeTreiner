@@ -1,6 +1,6 @@
 package com.github.hebertsouza87.pokeTreiner.application.repository;
 
-import com.github.hebertsouza87.pokeTreiner.application.entity.TreinerEntity;
+import com.github.hebertsouza87.pokeTreiner.domain.entity.TreinerEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

@@ -1,4 +1,4 @@
-package com.github.hebertsouza87.pokeTreiner.application.entity;
+package com.github.hebertsouza87.pokeTreiner.domain.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

@@ -1,9 +1,9 @@
 package com.github.hebertsouza87.pokeTreiner.domain.service;
 
-import com.github.hebertsouza87.pokeTreiner.application.entity.PokemonEntity;
-import com.github.hebertsouza87.pokeTreiner.application.entity.TreinerEntity;
 import com.github.hebertsouza87.pokeTreiner.application.gateway.PokeApiGateway;
 import com.github.hebertsouza87.pokeTreiner.application.repository.PokemonRepo;
+import com.github.hebertsouza87.pokeTreiner.domain.entity.PokemonEntity;
+import com.github.hebertsouza87.pokeTreiner.domain.entity.TreinerEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

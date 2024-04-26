@@ -1,6 +1,6 @@
 package com.github.hebertsouza87.pokeTreiner.domain.service;
 
-import com.github.hebertsouza87.pokeTreiner.application.entity.TreinerEntity;
+import com.github.hebertsouza87.pokeTreiner.domain.entity.TreinerEntity;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
