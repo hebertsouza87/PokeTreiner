@@ -1,6 +1,6 @@
 package com.github.hebertsouza87.pokeTreiner.application.kafka;
 
-import com.github.hebertsouza87.pokeTreiner.application.entity.TreinerEntity;
+import com.github.hebertsouza87.pokeTreiner.domain.entity.TreinerEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

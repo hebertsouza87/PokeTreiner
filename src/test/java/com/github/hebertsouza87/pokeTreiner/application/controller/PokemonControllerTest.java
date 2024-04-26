@@ -1,6 +1,6 @@
 package com.github.hebertsouza87.pokeTreiner.application.controller;
 
-import com.github.hebertsouza87.pokeTreiner.application.entity.PokemonEntity;
+import com.github.hebertsouza87.pokeTreiner.domain.entity.PokemonEntity;
 import com.github.hebertsouza87.pokeTreiner.domain.service.PokemonService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

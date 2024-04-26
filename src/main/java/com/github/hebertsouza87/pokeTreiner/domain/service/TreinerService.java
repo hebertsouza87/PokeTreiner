@@ -1,8 +1,8 @@
 package com.github.hebertsouza87.pokeTreiner.domain.service;
 
-import com.github.hebertsouza87.pokeTreiner.application.entity.TreinerEntity;
 import com.github.hebertsouza87.pokeTreiner.application.kafka.TreinerProducer;
 import com.github.hebertsouza87.pokeTreiner.application.repository.TreinerRepo;
+import com.github.hebertsouza87.pokeTreiner.domain.entity.TreinerEntity;
 import com.github.hebertsouza87.pokeTreiner.domain.exception.InvalidObjectException;
 import com.github.hebertsouza87.pokeTreiner.domain.exception.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

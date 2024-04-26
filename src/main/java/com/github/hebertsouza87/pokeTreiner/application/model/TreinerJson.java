@@ -1,12 +1,12 @@
 package com.github.hebertsouza87.pokeTreiner.application.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.github.hebertsouza87.pokeTreiner.application.entity.TreinerEntity;
+import com.github.hebertsouza87.pokeTreiner.domain.entity.TreinerEntity;
 
 import java.util.List;
 
 public class TreinerJson {
-    
+
     private Long id;
     private String name;
     private String email;

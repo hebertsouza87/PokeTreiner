@@ -1,8 +1,8 @@
 package com.github.hebertsouza87.pokeTreiner.application.kafka;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.github.hebertsouza87.pokeTreiner.application.entity.TreinerEntity;
 import com.github.hebertsouza87.pokeTreiner.application.model.TreinerJson;
+import com.github.hebertsouza87.pokeTreiner.domain.entity.TreinerEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

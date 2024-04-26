@@ -1,11 +1,11 @@
 package com.github.hebertsouza87.pokeTreiner.domain.service;
 
-import com.github.hebertsouza87.pokeTreiner.application.entity.PokemonEntity;
-import com.github.hebertsouza87.pokeTreiner.application.entity.TreinerEntity;
 import com.github.hebertsouza87.pokeTreiner.application.gateway.PokeApiGateway;
 import com.github.hebertsouza87.pokeTreiner.application.model.PokemonJson;
 import com.github.hebertsouza87.pokeTreiner.application.repository.PokemonRepo;
 import com.github.hebertsouza87.pokeTreiner.application.repository.TreinerRepo;
+import com.github.hebertsouza87.pokeTreiner.domain.entity.PokemonEntity;
+import com.github.hebertsouza87.pokeTreiner.domain.entity.TreinerEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

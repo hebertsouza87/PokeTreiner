@@ -1,4 +1,4 @@
-package com.github.hebertsouza87.pokeTreiner.application.entity;
+package com.github.hebertsouza87.pokeTreiner.domain.entity;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
